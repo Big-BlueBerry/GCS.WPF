@@ -5,8 +5,218 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GCS.WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="472.278" Width="703.137">
+    <Window.Resources>
+        <Style x:Key="CircleButtonStyle" TargetType="{x:Type ToggleButton}">
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border Margin="3" CornerRadius="4" BorderBrush="Black" BorderThickness="1" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition" RenderTransformOrigin="0.5,0.5">
+                            <Grid x:Name="grid" Margin="0">
+                                <Ellipse Margin="3" Stroke="Black" StrokeThickness="3"/>
+                                <Ellipse Margin="24" Stroke="Black" StrokeThickness="2"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="BorderBrush" Value="#80DADADA"/>
+                                <Setter Property="Background" Value="#400080FF"/>
+                                <Setter Property="Background" TargetName="grid" Value="#400080FF"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="grid" Value="#210080FF"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#80DADADA"/>
+                                <Setter Property="Background" Value="#210080FF"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                    <Condition Property="IsChecked" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="BorderBrush" Value="#90006CD9"/>
+                                <Setter Property="Background" Value="#400080FF"/>
+                                <Setter Property="Background" TargetName="grid" Value="#400080FF"/>
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsKeyboardFocused" Value="True"/>
+                                    <Condition Property="IsChecked" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="BorderBrush" Value="#90006CD9"/>
+                                <Setter Property="Background" Value="#400080FF"/>
+                                <Setter Property="Background" TargetName="grid" Value="#400080FF"/>
+                            </MultiTrigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="BorderBrush" Value="#90006CD9"/>
+                                <Setter Property="Background" Value="#400080FF"/>
+                                <Setter Property="Background" TargetName="grid" Value="#400080FF"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="LineButtonStyle" TargetType="{x:Type ToggleButton}">
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border Margin="3" CornerRadius="4" BorderBrush="Black" BorderThickness="1" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition" RenderTransformOrigin="0.5,0.5">
+                            <Grid x:Name="grid">
+                                <Ellipse Margin="8,0,0,8" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Left" Height="4" VerticalAlignment="Bottom" Width="4"/>
+                                <Ellipse Margin="0,8,8,0" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Right" Height="4" VerticalAlignment="Top" Width="4"/>
+                                <Path Data="M48,11.682857 L12.161001,47.611286" Margin="9.982,10,9.939,10" Stretch="Fill" Stroke="Black" StrokeThickness="2"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="BorderBrush" Value="#80DADADA"/>
+                                <Setter Property="Background" Value="#400080FF"/>
+                                <Setter Property="Background" TargetName="grid" Value="#400080FF"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="grid" Value="#210080FF"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#80DADADA"/>
+                                <Setter Property="Background" Value="#210080FF"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                    <Condition Property="IsChecked" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="BorderBrush" Value="#90006CD9"/>
+                                <Setter Property="Background" Value="#400080FF"/>
+                                <Setter Property="Background" TargetName="grid" Value="#400080FF"/>
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsKeyboardFocused" Value="True"/>
+                                    <Condition Property="IsChecked" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="BorderBrush" Value="#90006CD9"/>
+                                <Setter Property="Background" Value="#400080FF"/>
+                                <Setter Property="Background" TargetName="grid" Value="#400080FF"/>
+                            </MultiTrigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="BorderBrush" Value="#90006CD9"/>
+                                <Setter Property="Background" Value="#400080FF"/>
+                                <Setter Property="Background" TargetName="grid" Value="#400080FF"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="DotButtonStyle" TargetType="{x:Type ToggleButton}">
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border Margin="3" CornerRadius="4" BorderBrush="Black" BorderThickness="1" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition" RenderTransformOrigin="0.5,0.5">
+                            <Grid x:Name="grid">
+                                <Ellipse Margin="24" Stroke="Black" StrokeThickness="2" />
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="BorderBrush" Value="#80DADADA"/>
+                                <Setter Property="Background" Value="#400080FF"/>
+                                <Setter Property="Background" TargetName="grid" Value="#400080FF"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="grid" Value="#210080FF"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#80DADADA"/>
+                                <Setter Property="Background" Value="#210080FF"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                    <Condition Property="IsChecked" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="BorderBrush" Value="#90006CD9"/>
+                                <Setter Property="Background" Value="#400080FF"/>
+                                <Setter Property="Background" TargetName="grid" Value="#400080FF"/>
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsKeyboardFocused" Value="True"/>
+                                    <Condition Property="IsChecked" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="BorderBrush" Value="#90006CD9"/>
+                                <Setter Property="Background" Value="#400080FF"/>
+                                <Setter Property="Background" TargetName="grid" Value="#400080FF"/>
+                            </MultiTrigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="BorderBrush" Value="#90006CD9"/>
+                                <Setter Property="Background" Value="#400080FF"/>
+                                <Setter Property="Background" TargetName="grid" Value="#400080FF"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
-        
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="파일(_F)">
+                    <MenuItem Header="열기(_O)"/>
+                    <MenuItem Header="저장(_S)"/>
+                </MenuItem>
+                <MenuItem Header="편집(_E)">
+
+                </MenuItem>
+                <MenuItem Header="보기(_V)">
+
+                </MenuItem>
+            </Menu>
+            <UniformGrid DockPanel.Dock="Left" Width="60" Rows="5" Columns="1" VerticalAlignment="Top">
+                <ToggleButton Style="{DynamicResource CircleButtonStyle}" Click="Circle_Toggle" Content="원" Height="60" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" />
+                <ToggleButton Style="{DynamicResource LineButtonStyle}" Click="Circle_Toggle" Content="선" Height="60" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" />
+                <ToggleButton Style="{DynamicResource DotButtonStyle}" Click="Circle_Toggle" Content="점" Height="60" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" />
+            </UniformGrid>
+            <Canvas DockPanel.Dock="Bottom" Background="WhiteSmoke"/>
+        </DockPanel>
     </Grid>
 </Window>
