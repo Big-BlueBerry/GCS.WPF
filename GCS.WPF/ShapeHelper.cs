@@ -25,6 +25,11 @@ namespace GCS.WPF
             ellipse.Margin = new Thickness(x, y, 0, 0);
         }
 
+        public static void SetThreePoint(this Ellipse ellipse, Point focus1, Point focus2, Point pinpoint)
+        {
+            throw new WorkWoorimException("세 점으로부터 타원의 가로/세로/회전을 조정");
+        }
+
         public static void SetTwoPoint(this Line line, Point p1, Point p2)
         {
             line.X1 = p1.X; line.X2 = p2.X;
