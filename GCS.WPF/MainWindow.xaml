@@ -217,7 +217,7 @@
                 <ToggleButton Name="dotBtn" Style="{DynamicResource DotButtonStyle}" Click="Shape_Toggle" Content="dot" Height="60" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" />
             </UniformGrid>
             <Border BorderThickness="1" BorderBrush="Gray">
-                <Canvas DockPanel.Dock="Bottom" Background="White"/>
+                <Canvas Name="shapeCanvas" DockPanel.Dock="Bottom" Background="White" MouseLeftButtonDown="Canvas_MouseDown" MouseMove="Canvas_MouseMove" MouseLeftButtonUp="Canvas_MouseUp"/>
             </Border>
         </DockPanel>
     </Grid>

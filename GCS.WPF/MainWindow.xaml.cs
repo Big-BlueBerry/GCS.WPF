@@ -19,6 +19,8 @@ namespace GCS.WPF
     public partial class MainWindow : Window
     {
         private State _currentState;
+        private Point _lastDownedPoint;
+        private Shape _drawingShape;
         public MainWindow()
         {
             InitializeComponent();
@@ -43,6 +45,42 @@ namespace GCS.WPF
                 }
             }
             else _currentState = State.NOTDRAWING;
+        }
+
+        private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            _currentState |= State.LEFTMOUSE_DOWN;
+            if (_currentState.HasFlag(State.DRAWING))
+            {
+                _lastDownedPoint = e.GetPosition(shapeCanvas);
+                if (_drawingShape == null)
+                {
+                    if (_currentState.HasFlag(State.CIRCLE))
+                        _drawingShape = new Ellipse();
+                    _drawingShape.Stroke = Brushes.Blue;
+                    shapeCanvas.Children.Add(_drawingShape);
+                }
+            }
+        }
+
+        private void Canvas_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!_currentState.HasFlag(State.DRAWING)) return;
+            if (!_currentState.HasFlag(State.LEFTMOUSE_DOWN)) return;
+
+            var curPos = e.GetPosition(shapeCanvas);
+
+            // Preview drawing
+            if (_currentState.HasFlag(State.CIRCLE))
+            {
+                (_drawingShape as Ellipse).SetCircle(_lastDownedPoint, curPos);
+            }
+        }
+
+        private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            _currentState &= ~State.LEFTMOUSE_DOWN;
+            _drawingShape = null; // 요거 없으면 새로 생성안함
         }
     }
 }
