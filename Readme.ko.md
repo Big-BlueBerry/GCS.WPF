@@ -1,6 +1,6 @@
 # Geometric Construction Simulator
 
-상호 작용가능한 작도 시뮬레이션 프로그램. 대마고 동아리 [BigBlueBerry](github.com/Big-BlueBerry)의 @phillyai 와 @bigblueberry 제작.
+상호 작용가능한 작도 시뮬레이션 프로그램. 대마고 동아리 [BigBlueBerry](github.com/Big-BlueBerry)의 [@phillyai](github.com/phillyai) 와 [@bigblueberry](github.com/bigblueberry) 제작.
 [Monogame으로 만들어진 이전 버전](https://github.com/Big-Blueberry/GCS)
 
 ## [사용 방법](https://github.com/Big-BlueBerry/GCS.WPF/wiki)
@@ -19,8 +19,8 @@
 
 ## 크레딧
 
-메인 개발자 - 영찬 (@phillyai)
-서브 개발자 - 우림 (@bigblueberry)
+메인 개발자 - [영찬 (@phillyai)](github.com/phillyai)
+서브 개발자 - [우림 (@bigblueberry)](github.com/bigblueberry)
 
 ## [LICENSE](/LICENSE)
 
