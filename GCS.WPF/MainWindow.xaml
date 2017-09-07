@@ -20,7 +20,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <Border Margin="3" CornerRadius="4" BorderBrush="Black" BorderThickness="1" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition" RenderTransformOrigin="0.5,0.5">
+                        <Border Margin="3" CornerRadius="4" BorderBrush="#FFF0F0F0" BorderThickness="1" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition" RenderTransformOrigin="0.5,0.5">
                             <Grid x:Name="grid" Margin="0">
                                 <Ellipse Margin="3" Stroke="Black" StrokeThickness="3"/>
                                 <Ellipse Margin="24" Stroke="Black" StrokeThickness="2"/>
@@ -83,7 +83,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <Border Margin="3" CornerRadius="4" BorderBrush="Black" BorderThickness="1" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition" RenderTransformOrigin="0.5,0.5">
+                        <Border Margin="3" CornerRadius="4" BorderBrush="#FFF0F0F0" BorderThickness="1" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition" RenderTransformOrigin="0.5,0.5">
                             <Grid x:Name="grid">
                                 <Ellipse Margin="8,0,0,8" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Left" Height="4" VerticalAlignment="Bottom" Width="4"/>
                                 <Ellipse Margin="0,8,8,0" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Right" Height="4" VerticalAlignment="Top" Width="4"/>
@@ -147,7 +147,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <Border Margin="3" CornerRadius="4" BorderBrush="Black" BorderThickness="1" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition" RenderTransformOrigin="0.5,0.5">
+                        <Border Margin="3" CornerRadius="4" BorderBrush="#FFF0F0F0" BorderThickness="1" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition" RenderTransformOrigin="0.5,0.5">
                             <Grid x:Name="grid">
                                 <Ellipse Margin="24" Stroke="Black" StrokeThickness="2" />
                             </Grid>
@@ -198,7 +198,7 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <DockPanel>
+        <DockPanel Background="#FFF0F0F0">
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="파일(_F)">
                     <MenuItem Header="열기(_O)"/>
@@ -211,12 +211,14 @@
 
                 </MenuItem>
             </Menu>
-            <UniformGrid DockPanel.Dock="Left" Width="60" Rows="5" Columns="1" VerticalAlignment="Top">
-                <ToggleButton Style="{DynamicResource CircleButtonStyle}" Click="Circle_Toggle" Content="원" Height="60" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" />
-                <ToggleButton Style="{DynamicResource LineButtonStyle}" Click="Circle_Toggle" Content="선" Height="60" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" />
-                <ToggleButton Style="{DynamicResource DotButtonStyle}" Click="Circle_Toggle" Content="점" Height="60" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" />
+            <UniformGrid DockPanel.Dock="Left" Width="60" Rows="5" Columns="1" VerticalAlignment="Top" Background="#FFF0F0F0">
+                <ToggleButton Name="circleBtn" Style="{DynamicResource CircleButtonStyle}" Click="Shape_Toggle" Content="circle" Height="60" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" />
+                <ToggleButton Name="lineBtn" Style="{DynamicResource LineButtonStyle}" Click="Shape_Toggle" Content="line" Height="60" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" />
+                <ToggleButton Name="dotBtn" Style="{DynamicResource DotButtonStyle}" Click="Shape_Toggle" Content="dot" Height="60" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" />
             </UniformGrid>
-            <Canvas DockPanel.Dock="Bottom" Background="WhiteSmoke"/>
+            <Border BorderThickness="1" BorderBrush="Gray">
+                <Canvas DockPanel.Dock="Bottom" Background="White"/>
+            </Border>
         </DockPanel>
     </Grid>
 </Window>
