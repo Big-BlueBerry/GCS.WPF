@@ -24,5 +24,17 @@ namespace GCS.WPF
             ellipse.Width = ellipse.Height = radius * 2;
             ellipse.Margin = new Thickness(x, y, 0, 0);
         }
+
+        public static void SetTwoPoint(this Line line, Point p1, Point p2)
+        {
+            line.X1 = p1.X; line.X2 = p2.X;
+            line.Y1 = p1.Y; line.Y2 = p2.Y;
+        }
+
+        public static void SetDot(this Ellipse ellipse, Point point)
+        {
+            ellipse.Width = ellipse.Height = 4;
+            ellipse.Margin = new Thickness(point.X - 2, point.Y - 2, 0, 0);
+        }
     }
 }

@@ -57,6 +57,10 @@ namespace GCS.WPF
                 {
                     if (_currentState.HasFlag(State.CIRCLE))
                         _drawingShape = new Ellipse();
+                    else if (_currentState.HasFlag(State.LINE))
+                        _drawingShape = new Line();
+                    else if (_currentState.HasFlag(State.DOT))
+                        _drawingShape = new Ellipse();
                     _drawingShape.Stroke = Brushes.Blue;
                     shapeCanvas.Children.Add(_drawingShape);
                 }
@@ -74,6 +78,14 @@ namespace GCS.WPF
             if (_currentState.HasFlag(State.CIRCLE))
             {
                 (_drawingShape as Ellipse).SetCircle(_lastDownedPoint, curPos);
+            }
+            else if (_currentState.HasFlag(State.LINE))
+            {
+                (_drawingShape as Line).SetTwoPoint(_lastDownedPoint, curPos);
+            }
+            else if (_currentState.HasFlag(State.DOT))
+            {
+                (_drawingShape as Ellipse).SetDot(curPos);
             }
         }
 
