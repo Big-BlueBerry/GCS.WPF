@@ -1,6 +1,6 @@
 # Geometric Construction Simulator
 
-Interactive geometric construction simulator program made by @phillyai and @bigblueberry.
+Interactive geometric construction simulator program made by [@phillyai](github.com/phillyai) and [@bigblueberry](github.com/bigblueberry).
 [Previous version (made with monogame)](https://github.com/Big-Blueberry/GCS)
 
 ## [Usage](https://github.com/Big-BlueBerry/GCS.WPF/wiki)
