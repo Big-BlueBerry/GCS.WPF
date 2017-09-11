@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.10
+VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GCS.WPF", "GCS.WPF\GCS.WPF.csproj", "{BBC10D95-152A-42AC-BC02-C7DEBD3BF309}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GCS.Math", "GCS.Math\GCS.Math.csproj", "{612472E9-8E74-4288-919A-3693B15C6A82}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{BBC10D95-152A-42AC-BC02-C7DEBD3BF309}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBC10D95-152A-42AC-BC02-C7DEBD3BF309}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBC10D95-152A-42AC-BC02-C7DEBD3BF309}.Release|Any CPU.Build.0 = Release|Any CPU
+		{612472E9-8E74-4288-919A-3693B15C6A82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{612472E9-8E74-4288-919A-3693B15C6A82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{612472E9-8E74-4288-919A-3693B15C6A82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{612472E9-8E74-4288-919A-3693B15C6A82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

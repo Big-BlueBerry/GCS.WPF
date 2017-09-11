@@ -9,6 +9,7 @@ namespace GCS.WPF.GShapes
         public Point Focus1 { get; protected set; }
         public Point Focus2 { get; protected set; }
         public Point PinPoint { get; protected set; }
+        //public Point Center => Point.Add(Focus1, Focus2);
 
         public new Ellipse Control { get; protected set; }
 
