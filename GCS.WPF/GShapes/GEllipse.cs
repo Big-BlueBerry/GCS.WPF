@@ -11,8 +11,6 @@ namespace GCS.WPF.GShapes
         public Point PinPoint { get; protected set; }
         //public Point Center => Point.Add(Focus1, Focus2);
 
-        public new Ellipse Control { get; protected set; }
-
         public GEllipse(Ellipse ellipse = null)
         {
             Control = ellipse ?? new Ellipse();
@@ -20,7 +18,10 @@ namespace GCS.WPF.GShapes
 
         public GEllipse(Point focus1, Point focus2, Point pinpoint) : this()
         {
-            Control.SetThreePoint(focus1, focus2, pinpoint);
+            (Control as Ellipse).SetThreePoint(focus1, focus2, pinpoint);
+            Focus1 = focus1;
+            Focus2 = focus2;
+            PinPoint = pinpoint;
         }
     }
 }

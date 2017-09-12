@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using GCS.WPF.GShapes;
 
 namespace GCS.WPF
 {
@@ -20,11 +21,15 @@ namespace GCS.WPF
     {
         private State _currentState;
         private Point _lastDownedPoint;
-        private Shape _drawingShape;
+        private GShape _drawingShape;
+
+        private List<GShape> _shapes;
+
         public MainWindow()
         {
             InitializeComponent();
             _currentState = State.NOTDRAWING;
+            _shapes = new List<GShape>();
         }
 
         private void Shape_Toggle(object sender, RoutedEventArgs e)
@@ -56,13 +61,13 @@ namespace GCS.WPF
                 if (_drawingShape == null)
                 {
                     if (_currentState.HasFlag(State.CIRCLE))
-                        _drawingShape = new Ellipse();
+                        _drawingShape = new GEllipse();
                     else if (_currentState.HasFlag(State.LINE))
-                        _drawingShape = new Line();
+                        _drawingShape = new GLine();
                     else if (_currentState.HasFlag(State.DOT))
-                        _drawingShape = new Ellipse();
-                    _drawingShape.Stroke = Brushes.Blue;
-                    shapeCanvas.Children.Add(_drawingShape);
+                        _drawingShape = new GEllipse();
+                    _drawingShape.Control.Stroke = Brushes.Blue;
+                    shapeCanvas.Children.Add(_drawingShape.Control);
                 }
             }
         }
@@ -77,21 +82,22 @@ namespace GCS.WPF
             // Preview drawing
             if (_currentState.HasFlag(State.CIRCLE))
             {
-                (_drawingShape as Ellipse).SetCircle(_lastDownedPoint, curPos);
+                (_drawingShape.Control as Ellipse).SetCircle(_lastDownedPoint, curPos);
             }
             else if (_currentState.HasFlag(State.LINE))
             {
-                (_drawingShape as Line).SetTwoPoint(_lastDownedPoint, curPos);
+                (_drawingShape.Control as Line).SetTwoPoint(_lastDownedPoint, curPos);
             }
             else if (_currentState.HasFlag(State.DOT))
             {
-                (_drawingShape as Ellipse).SetDot(curPos);
+                (_drawingShape.Control as Ellipse).SetDot(curPos);
             }
         }
 
         private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
         {
             _currentState &= ~State.LEFTMOUSE_DOWN;
+            _shapes.Add(_drawingShape);
             _drawingShape = null; // 요거 없으면 새로 생성안함
         }
     }
