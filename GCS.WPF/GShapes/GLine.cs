@@ -35,6 +35,13 @@ namespace GCS.WPF.GShapes
             Point1 = p1; Point2 = p2;
         }
 
+        public static GLine FromTwoDots(GDot p1, GDot p2)
+        {
+            var line = new GLine();
+            new LineOnTwoDotsRule(line, p1, p2);
+            return line;
+        }
+
         public class LineOnTwoDotsRule : GShapeRule
         {
             public LineOnTwoDotsRule(GLine line, GDot p1, GDot p2) : base(line)

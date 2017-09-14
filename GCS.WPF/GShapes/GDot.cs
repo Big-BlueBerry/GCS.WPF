@@ -28,5 +28,10 @@ namespace GCS.WPF.GShapes
             (Control as Ellipse).SetDot(coord);
             Coord = coord;
         }
+
+        public static GDot FromCoord(Point coord)
+        {
+            return new GDot(coord);
+        }
     }
 }

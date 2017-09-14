@@ -36,6 +36,13 @@ namespace GCS.WPF.GShapes
             Another = another;
         }
 
+        public static GCircle FromTwoDots(GDot center, GDot another)
+        {
+            var circle = new GCircle();
+            new CircleOnTwoDotsRule(circle, center, another);
+            return circle;
+        }
+
         public class CircleOnTwoDotsRule : GShapeRule
         {
             public CircleOnTwoDotsRule(GCircle circle, GDot p1, GDot p2) : base(circle)
