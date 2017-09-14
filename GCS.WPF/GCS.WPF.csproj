@@ -54,6 +54,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GShapes\GCircle.cs" />
     <Compile Include="GShapes\GDot.cs" />
     <Compile Include="GShapes\GEllipse.cs" />
     <Compile Include="GShapes\GLine.cs" />
