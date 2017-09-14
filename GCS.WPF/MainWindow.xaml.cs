@@ -13,18 +13,24 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using GCS.WPF.GShapes;
 
 namespace GCS.WPF
 {
     public partial class MainWindow : Window
     {
         private State _currentState;
-        private Point _lastDownedPoint;
-        private Shape _drawingShape;
+        private GDot _lastDownedPoint;
+        private GDot _movingPoint;
+        private GShape _drawingShape;
+
+        private List<GShape> _shapes;
+
         public MainWindow()
         {
             InitializeComponent();
             _currentState = State.NOTDRAWING;
+            _shapes = new List<GShape>();
         }
 
         private void Shape_Toggle(object sender, RoutedEventArgs e)
@@ -47,22 +53,30 @@ namespace GCS.WPF
             else _currentState = State.NOTDRAWING;
         }
 
+        private GDot GetDot(Point coord)
+        {
+            // TODO: 이전 버전의 GCS의 GetDot과 같은 작동을 하게끔
+            return GDot.FromCoord(coord);
+        }
+
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
+
             _currentState |= State.LEFTMOUSE_DOWN;
             if (_currentState.HasFlag(State.DRAWING))
             {
-                _lastDownedPoint = e.GetPosition(shapeCanvas);
+                _lastDownedPoint = GetDot(e.GetPosition(shapeCanvas));
+                _movingPoint = GDot.FromCoord(e.GetPosition(shapeCanvas));
                 if (_drawingShape == null)
                 {
                     if (_currentState.HasFlag(State.CIRCLE))
-                        _drawingShape = new Ellipse();
+                        _drawingShape = GCircle.FromTwoDots(_lastDownedPoint, _movingPoint);
                     else if (_currentState.HasFlag(State.LINE))
-                        _drawingShape = new Line();
+                        _drawingShape = GLine.FromTwoDots(_lastDownedPoint, _movingPoint);
                     else if (_currentState.HasFlag(State.DOT))
-                        _drawingShape = new Ellipse();
-                    _drawingShape.Stroke = Brushes.Blue;
-                    shapeCanvas.Children.Add(_drawingShape);
+                        _drawingShape = _lastDownedPoint;
+                    _drawingShape.Control.Stroke = Brushes.Blue;
+                    shapeCanvas.Children.Add(_drawingShape.Control);
                 }
             }
         }
@@ -77,21 +91,22 @@ namespace GCS.WPF
             // Preview drawing
             if (_currentState.HasFlag(State.CIRCLE))
             {
-                (_drawingShape as Ellipse).SetCircle(_lastDownedPoint, curPos);
+                (_drawingShape.Control as Ellipse).SetCircle(_lastDownedPoint.Coord, curPos);
             }
             else if (_currentState.HasFlag(State.LINE))
             {
-                (_drawingShape as Line).SetTwoPoint(_lastDownedPoint, curPos);
+                (_drawingShape.Control as Line).SetTwoPoint(_lastDownedPoint.Coord, curPos);
             }
             else if (_currentState.HasFlag(State.DOT))
             {
-                (_drawingShape as Ellipse).SetDot(curPos);
+                (_drawingShape.Control as Ellipse).SetDot(curPos);
             }
         }
 
         private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
         {
             _currentState &= ~State.LEFTMOUSE_DOWN;
+            _shapes.Add(_drawingShape);
             _drawingShape = null; // 요거 없으면 새로 생성안함
         }
     }

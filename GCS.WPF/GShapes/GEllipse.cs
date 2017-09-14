@@ -11,16 +11,33 @@ namespace GCS.WPF.GShapes
         public Point PinPoint { get; protected set; }
         //public Point Center => Point.Add(Focus1, Focus2);
 
-        public new Ellipse Control { get; protected set; }
+        protected override int _attrCount => 3;
+        protected override Point this[int index]
+        {
+            get => new Point[] { Focus1, Focus2, PinPoint }[index];
+            set
+            {
+                switch (index)
+                {
+                    case 0: Focus1 = value; return;
+                    case 1: Focus2 = value; return;
+                    case 2: PinPoint = value; return;
+                    default: throw new IndexOutOfRangeException();
+                }
+            }
+        }
 
-        public GEllipse(Ellipse ellipse = null)
+        protected GEllipse(Ellipse ellipse = null)
         {
             Control = ellipse ?? new Ellipse();
         }
 
-        public GEllipse(Point focus1, Point focus2, Point pinpoint) : this()
+        protected GEllipse(Point focus1, Point focus2, Point pinpoint) : this()
         {
-            Control.SetThreePoint(focus1, focus2, pinpoint);
+            (Control as Ellipse).SetThreePoint(focus1, focus2, pinpoint);
+            Focus1 = focus1;
+            Focus2 = focus2;
+            PinPoint = pinpoint;
         }
     }
 }
