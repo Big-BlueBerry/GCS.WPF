@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Shapes;
+using GCS.Math;
 
 namespace GCS.WPF.GShapes
 {
-    public class GDot : GShape
+    public class GDot : GShape, IDot
     {
+        public Point Coord { get; protected set; }
+
         protected override int _attrCount => 1;
         protected override Point this[int index]
         {
@@ -16,7 +19,6 @@ namespace GCS.WPF.GShapes
                 else throw new IndexOutOfRangeException();
             }
         }
-        public Point Coord { get; protected set; }
 
         protected GDot(Ellipse dot = null)
         {

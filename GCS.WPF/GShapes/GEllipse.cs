@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Shapes;
+using GCS.Math;
 
 namespace GCS.WPF.GShapes
 {
-    public class GEllipse : GShape
+    public class GEllipse : GShape, IEllipse
     {
         public Point Focus1 { get; protected set; }
         public Point Focus2 { get; protected set; }
