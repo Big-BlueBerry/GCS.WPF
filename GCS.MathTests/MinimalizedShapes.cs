@@ -33,6 +33,8 @@ namespace GCS.MathTests
         {
             public Point Point1 { get; set; }
             public Point Point2 { get; set; }
+            public float Grad => Geometry.Grad(this);
+            public float Yint => Geometry.Yint(this);
             public LineLike(Point p1, Point p2)
             {
                 Point1 = p1;

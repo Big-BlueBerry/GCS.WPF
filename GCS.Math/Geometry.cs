@@ -8,29 +8,29 @@ namespace GCS.Math
         #region GetIntersects
         public static Vector2[] GetIntersects(ILine line1, ILine line2)
         {
-            if (grad(line1) == grad(line2))
+            if (Grad(line1) == Grad(line2))
             {
-                if (yint(line1) == yint(line2))
+                if (Yint(line1) == Yint(line2))
                     throw new SameShapeException();
                 else
                     return new Vector2[] { };
             }
-            float intersect_x = (yint(line2) - yint(line1)) / (grad(line1) - grad(line2));
-            return new[] { new Vector2(intersect_x, intersect_x * grad(line1) + yint(line1)) };
+            float intersect_x = (Yint(line2) - Yint(line1)) / (Grad(line1) - Grad(line2));
+            return new[] { new Vector2(intersect_x, intersect_x * Grad(line1) + Yint(line1)) };
         }
 
         public static Vector2[] GetIntersects(ISegment seg1, ISegment seg2)
         {
-            if (grad(seg1) == grad(seg2))
+            if (Grad(seg1) == Grad(seg2))
             {
-                if (yint(seg1) == yint(seg2))
+                if (Yint(seg1) == Yint(seg2))
                     throw new SameShapeException();
                 else
                     return new Vector2[] { };
             }
             
-            float intersect_x = (yint(seg2) - yint(seg1)) / (grad(seg1) - grad(seg2));
-            Vector2 intersect = new Vector2(intersect_x, intersect_x * grad(seg1) + yint(seg1));
+            float intersect_x = (Yint(seg2) - Yint(seg1)) / (Grad(seg1) - Grad(seg2));
+            Vector2 intersect = new Vector2(intersect_x, intersect_x * Grad(seg1) + Yint(seg1));
             var seg1_len = seg1.Point1.Distance(seg1.Point2);
             var seg2_len = seg2.Point1.Distance(seg2.Point2);
             if (intersect.Distance(seg1.Point1) < seg1_len &&
@@ -54,10 +54,10 @@ namespace GCS.Math
             throw new WorkWoorimException();
         }
 
-        private static float grad(ILineLike line)
+        public static float Grad(ILineLike line)
             => (float)((line.Point2.Y - line.Point1.Y) / (line.Point2.X - line.Point1.X));
-        private static float yint(ILineLike line)
-            => (float)(line.Point1.Y - grad(line) * line.Point1.X);
+        public static float Yint(ILineLike line)
+            => (float)(line.Point1.Y - Grad(line) * line.Point1.X);
         public static float Distance(this Vector2 p1, Vector2 p2)
             => (float)math.Sqrt(math.Pow(p2.X - p1.X, 2) + math.Pow(p2.Y - p1.Y, 2));
     }
