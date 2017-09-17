@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Shapes;
 using System.Windows;
+using GCS.Math;
 
 namespace GCS.WPF.GShapes
 {
-    public abstract class GShape
+    public abstract class GShape : IShape
     {
         public abstract class GShapeRule
         {

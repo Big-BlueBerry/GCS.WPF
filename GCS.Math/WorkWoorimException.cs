@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GCS.WPF
+namespace GCS
 {
     public class WorkWoorimException : NotImplementedException
     {

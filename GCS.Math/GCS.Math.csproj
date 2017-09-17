@@ -43,7 +43,8 @@
   <ItemGroup>
     <Compile Include="Geometry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShapeBase.cs" />
+    <Compile Include="IShape.cs" />
+    <Compile Include="WorkWoorimException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
