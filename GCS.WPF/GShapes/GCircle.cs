@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Shapes;
+using GCS.Math;
 
 namespace GCS.WPF.GShapes
 {
-    public class GCircle : GShape
+    public class GCircle : GShape, ICircle
     {
         public Point Center { get; protected set; }
         public Point Another { get; protected set; }

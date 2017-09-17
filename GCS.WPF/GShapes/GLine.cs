@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Shapes;
+using GCS.Math;
 
 namespace GCS.WPF.GShapes
 {
-    public class GLine : GShape
+    public class GLine : GShape, ILine
     {
-        public Point Point1 { get; private set; }
-        public Point Point2 { get; private set; }
+        public Point Point1 { get; protected set; }
+        public Point Point2 { get; protected set; }
 
         protected override int _attrCount => 2;
         protected override Point this[int index]
