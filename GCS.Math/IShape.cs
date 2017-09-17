@@ -19,10 +19,20 @@ namespace GCS.Math
         Point Another { get; }
     }
 
-    public interface ILine : IShape
+    public interface ILineLike : IShape
     {
         Point Point1 { get; }
         Point Point2 { get; }
+    }
+
+    public interface ILine : ILineLike
+    {
+
+    }
+
+    public interface ISegment : ILineLike
+    {
+
     }
 
     public interface IDot : IShape
