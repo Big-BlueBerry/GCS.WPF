@@ -8,6 +8,13 @@ namespace GCS.Math
         #region GetIntersects
         public static Vector2[] GetIntersects(ILine line1, ILine line2)
         {
+            try
+            {
+                ThrowIfInvalidShape(line1);
+                ThrowIfInvalidShape(line2);
+            }
+            catch { throw; }
+
             if (Grad(line1) == Grad(line2))
             {
                 if (Yint(line1) == Yint(line2))
@@ -21,6 +28,13 @@ namespace GCS.Math
 
         public static Vector2[] GetIntersects(ISegment seg1, ISegment seg2)
         {
+            try
+            {
+                ThrowIfInvalidShape(seg1);
+                ThrowIfInvalidShape(seg2);
+            }
+            catch { throw; }
+
             if (Grad(seg1) == Grad(seg2))
             {
                 if (Yint(seg1) == Yint(seg2))
@@ -52,6 +66,16 @@ namespace GCS.Math
         public static float GetNearestDistance(IShape shape, Vector2 point)
         {
             throw new WorkWoorimException();
+        }
+        
+        public static void ThrowIfInvalidShape(ILineLike shape)
+        {
+            if (shape.Point1 == shape.Point2) throw new InvalidShapeException();
+        }
+
+        public static void ThrowIfInvalidShape(ICircle shape)
+        {
+            if (shape.Center == shape.Another) throw new InvalidShapeException();
         }
 
         public static float Grad(ILineLike line)
