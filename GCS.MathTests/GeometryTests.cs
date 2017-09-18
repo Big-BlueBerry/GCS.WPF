@@ -14,6 +14,7 @@ namespace GCS.MathTests
     [TestClass]
     public class GeometryTests
     {
+        System.Collections.IComparer pointComparer = new PointComparer();
         [TestCategory("Intersect")]
         [TestMethod]
         public void TestLinelikeIntersects()
@@ -23,6 +24,18 @@ namespace GCS.MathTests
                 Line line2 = new Line(new Point(10, -10), new Point(-10, 10));
                 CollectionAssert.AreEqual(Geometry.GetIntersects(line1, line2),
                     new[] { new Point(0, 0) });
+            }
+            {
+                Line line1 = new Line(new Point(-10, -10), new Point(10, 10));
+                Line line2 = new Line(new Point(10, 10), new Point(20, 10));
+                CollectionAssert.AreEqual(Geometry.GetIntersects(line1, line2),
+                    new[] { new Point(10, 10) });
+            }
+            {
+                Segment seg1 = new Segment(new Point(0, 0), new Point(3, -0.5));
+                Segment seg2 = new Segment(new Point(4, 1), new Point(1, -3));
+                CollectionAssert.AreEqual(Geometry.GetIntersects(seg1, seg2),
+                    new[] { new Point(2.89, -0.48) }, pointComparer);
             }
         }
 
