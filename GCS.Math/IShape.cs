@@ -1,28 +1,26 @@
-﻿using Point = System.Windows.Point;
+﻿using Vector2 = System.Windows.Vector;
 
 namespace GCS.Math
 {
-    public interface IShape
-    {
-    }
+    public interface IShape { }
 
     public interface IEllipse : IShape
     {
-        Point Focus1 { get; }
-        Point Focus2 { get; }
-        Point PinPoint { get; }
+        Vector2 Focus1 { get; }
+        Vector2 Focus2 { get; }
+        Vector2 PinPoint { get; }
     }
 
     public interface ICircle : IShape
     {
-        Point Center { get; }
-        Point Another { get; }
+        Vector2 Center { get; }
+        Vector2 Another { get; }
     }
 
     public interface ILineLike : IShape
     {
-        Point Point1 { get; }
-        Point Point2 { get; }
+        Vector2 Point1 { get; }
+        Vector2 Point2 { get; }
     }
 
     public interface ILine : ILineLike
@@ -37,6 +35,6 @@ namespace GCS.Math
 
     public interface IDot : IShape
     {
-        Point Coord { get; }
+        Vector2 Coord { get; }
     }
 }

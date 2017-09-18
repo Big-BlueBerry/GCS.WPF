@@ -2,20 +2,20 @@
 using System.Windows;
 using System.Windows.Shapes;
 using GCS.Math;
-
+using Vector2 = System.Windows.Vector;
 namespace GCS.WPF.GShapes
 {
     public class GEllipse : GShape, IEllipse
     {
-        public Point Focus1 { get; protected set; }
-        public Point Focus2 { get; protected set; }
-        public Point PinPoint { get; protected set; }
+        public Vector2 Focus1 { get; protected set; }
+        public Vector2 Focus2 { get; protected set; }
+        public Vector2 PinPoint { get; protected set; }
         //public Point Center => Point.Add(Focus1, Focus2);
 
         protected override int _attrCount => 3;
-        protected override Point this[int index]
+        protected override Vector2 this[int index]
         {
-            get => new Point[] { Focus1, Focus2, PinPoint }[index];
+            get => new Vector2[] { Focus1, Focus2, PinPoint }[index];
             set
             {
                 switch (index)
@@ -33,7 +33,7 @@ namespace GCS.WPF.GShapes
             Control = ellipse ?? new Ellipse();
         }
 
-        protected GEllipse(Point focus1, Point focus2, Point pinpoint) : this()
+        protected GEllipse(Vector2 focus1, Vector2 focus2, Vector2 pinpoint) : this()
         {
             (Control as Ellipse).SetThreePoint(focus1, focus2, pinpoint);
             Focus1 = focus1;

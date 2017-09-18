@@ -3,17 +3,19 @@ using System.Windows;
 using System.Windows.Shapes;
 using GCS.Math;
 
+using Vector2 = System.Windows.Vector;
+
 namespace GCS.WPF.GShapes
 {
     public class GCircle : GShape, ICircle
     {
-        public Point Center { get; protected set; }
-        public Point Another { get; protected set; }
+        public Vector2 Center { get; protected set; }
+        public Vector2 Another { get; protected set; }
 
         protected override int _attrCount => 2;
-        protected override Point this[int index]
+        protected override Vector2 this[int index]
         {
-            get => new Point[] { Center, Another }[index];
+            get => new Vector2[] { Center, Another }[index];
             set
             {
                 switch(index)
@@ -30,7 +32,7 @@ namespace GCS.WPF.GShapes
             Control = circle ?? new Ellipse();
         }
 
-        protected GCircle(Point center, Point another) : this()
+        protected GCircle(Vector2 center, Vector2 another) : this()
         {
             (Control as Ellipse).SetCircle(center, another);
             Center = center;

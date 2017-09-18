@@ -15,6 +15,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GCS.WPF.GShapes;
 
+using Vector2 = System.Windows.Vector;
+
 namespace GCS.WPF
 {
     public partial class MainWindow : Window
@@ -53,7 +55,7 @@ namespace GCS.WPF
             else _currentState = State.NOTDRAWING;
         }
 
-        private GDot GetDot(Point coord)
+        private GDot GetDot(Vector2 coord)
         {
             // TODO: 이전 버전의 GCS의 GetDot과 같은 작동을 하게끔
             return GDot.FromCoord(coord);
@@ -65,8 +67,8 @@ namespace GCS.WPF
             _currentState |= State.LEFTMOUSE_DOWN;
             if (_currentState.HasFlag(State.DRAWING))
             {
-                _lastDownedPoint = GetDot(e.GetPosition(shapeCanvas));
-                _movingPoint = GDot.FromCoord(e.GetPosition(shapeCanvas));
+                _lastDownedPoint = GetDot(e.GetPosition(shapeCanvas).ToVector());
+                _movingPoint = GDot.FromCoord(e.GetPosition(shapeCanvas).ToVector());
                 if (_drawingShape == null)
                 {
                     if (_currentState.HasFlag(State.CIRCLE))
@@ -86,7 +88,7 @@ namespace GCS.WPF
             if (!_currentState.HasFlag(State.DRAWING)) return;
             if (!_currentState.HasFlag(State.LEFTMOUSE_DOWN)) return;
 
-            var curPos = e.GetPosition(shapeCanvas);
+            var curPos = e.GetPosition(shapeCanvas).ToVector();
 
             // Preview drawing
             if (_currentState.HasFlag(State.CIRCLE))

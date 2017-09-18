@@ -1,16 +1,15 @@
-﻿using GCS.Math;
-using System.Windows;
+﻿using Vector2 = System.Windows.Vector;
 
-namespace GCS.MathTests
+namespace GCS.Math
 {
-    internal sealed class MinimalizedShapes
+    public sealed class MinimalizedShapes
     {
         public class Ellipse : IEllipse
         {
-            public Point Focus1 { get; set; }
-            public Point Focus2 { get; set; }
-            public Point PinPoint { get; set; }
-            public Ellipse(Point focus1, Point focus2, Point pin)
+            public Vector2 Focus1 { get; set; }
+            public Vector2 Focus2 { get; set; }
+            public Vector2 PinPoint { get; set; }
+            public Ellipse(Vector2 focus1, Vector2 focus2, Vector2 pin)
             {
                 Focus1 = focus1;
                 Focus2 = focus2;
@@ -20,9 +19,9 @@ namespace GCS.MathTests
 
         public class Circle : ICircle
         {
-            public Point Center { get; set; }
-            public Point Another { get; set; }
-            public Circle(Point center, Point another)
+            public Vector2 Center { get; set; }
+            public Vector2 Another { get; set; }
+            public Circle(Vector2 center, Vector2 another)
             {
                 Center = center;
                 Another = another;
@@ -31,11 +30,11 @@ namespace GCS.MathTests
 
         public abstract class LineLike : ILineLike
         {
-            public Point Point1 { get; set; }
-            public Point Point2 { get; set; }
+            public Vector2 Point1 { get; set; }
+            public Vector2 Point2 { get; set; }
             public float Grad => Geometry.Grad(this);
             public float Yint => Geometry.Yint(this);
-            public LineLike(Point p1, Point p2)
+            public LineLike(Vector2 p1, Vector2 p2)
             {
                 Point1 = p1;
                 Point2 = p2;
@@ -44,18 +43,18 @@ namespace GCS.MathTests
 
         public class Line : LineLike, ILine
         {
-            public Line(Point p1, Point p2) : base(p1, p2) { }
+            public Line(Vector2 p1, Vector2 p2) : base(p1, p2) { }
         }
 
         public class Segment : LineLike, ISegment
         {
-            public Segment(Point p1, Point p2) : base(p1, p2) { }
+            public Segment(Vector2 p1, Vector2 p2) : base(p1, p2) { }
         }
 
         public class Dot : IDot
         {
-            public Point Coord { get; set; }
-            public Dot(Point coord)
+            public Vector2 Coord { get; set; }
+            public Dot(Vector2 coord)
             {
                 Coord = coord;
             }

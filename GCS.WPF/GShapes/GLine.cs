@@ -3,17 +3,19 @@ using System.Windows;
 using System.Windows.Shapes;
 using GCS.Math;
 
+using Vector2 = System.Windows.Vector;
+
 namespace GCS.WPF.GShapes
 {
     public class GLine : GShape, ILine
     {
-        public Point Point1 { get; protected set; }
-        public Point Point2 { get; protected set; }
+        public Vector2 Point1 { get; protected set; }
+        public Vector2 Point2 { get; protected set; }
 
         protected override int _attrCount => 2;
-        protected override Point this[int index]
+        protected override Vector2 this[int index]
         {
-            get => new Point[] { Point1, Point2 }[index];
+            get => new Vector2[] { Point1, Point2 }[index];
             set
             {
                 switch (index)
@@ -30,7 +32,7 @@ namespace GCS.WPF.GShapes
             Control = line ?? new Line();
         }
 
-        protected GLine(Point p1, Point p2) : this()
+        protected GLine(Vector2 p1, Vector2 p2) : this()
         {
             (Control as Line).SetTwoPoint(p1, p2);
             Point1 = p1; Point2 = p2;

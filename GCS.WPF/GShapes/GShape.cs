@@ -3,6 +3,8 @@ using System.Windows.Shapes;
 using System.Windows;
 using GCS.Math;
 
+using Vector2 = System.Windows.Vector;
+
 namespace GCS.WPF.GShapes
 {
     public abstract class GShape : IShape
@@ -51,15 +53,15 @@ namespace GCS.WPF.GShapes
         protected GShapeRule _rule;
 
         protected abstract int _attrCount { get; }
-        protected abstract Point this[int index] { get; set; }
+        protected abstract Vector2 this[int index] { get; set; }
 
-        public void Move(Point delta)
+        public void Move(Vector2 delta)
         {
             for (int i = 0; i < _attrCount; i++)
                 this[i] += new Vector(delta.X, delta.Y);
             _rule?.Move();
         }
-        public void MoveTo(Point to)
+        public void MoveTo(Vector2 to)
         {
             Move(to - new Vector(this[0].X, this[0].Y));
         }

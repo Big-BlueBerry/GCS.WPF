@@ -1,5 +1,5 @@
 ﻿using math = System.Math;
-using Vector2 = System.Windows.Point;
+using Vector2 = System.Windows.Vector;
 
 namespace GCS.Math
 {
@@ -24,6 +24,11 @@ namespace GCS.Math
             }
             float intersect_x = (Yint(line2) - Yint(line1)) / (Grad(line1) - Grad(line2));
             return new[] { new Vector2(intersect_x, intersect_x * Grad(line1) + Yint(line1)) };
+        }
+
+        public static Vector2[] GetIntersects(ILine line, ICircle cir)
+        {
+            throw new WorkWoorimException();
         }
 
         public static Vector2[] GetIntersects(ISegment seg1, ISegment seg2)
@@ -56,6 +61,39 @@ namespace GCS.Math
             }
             else return new Vector2[] { };
         }
+
+        public static Vector2[] GetIntersects(ICircle cir1, ICircle cir2)
+        {
+            try
+            {
+                ThrowIfInvalidShape(cir1);
+                ThrowIfInvalidShape(cir2);
+            }
+            catch { throw; }
+
+            float distance = cir1.Center.Distance(cir2.Center);
+            if (distance == 0)
+            {
+                if (Radius(cir1) == Radius(cir2)) throw new SameShapeException();
+                else return new Vector2[] { };
+            }
+            else if (Radius(cir1) + Radius(cir2) < distance)
+                return new Vector2[] { };
+            else if (distance < math.Abs(Radius(cir1) - Radius(cir2)))
+                return new Vector2[] { };
+            else
+            {
+                float d = distance;
+                float r1 = Radius(cir1);
+                float r2 = Radius(cir2);
+                float x = (d * d - r1 * r1 - r2 * r2) / (d * 2);
+                Vector2 p1 = cir1.Center + (cir2.Center - cir1.Center) * x / d;
+                Vector2 v = cir1.Center - cir2.Center;
+                v = new Vector2(-v.Y, v.X);
+                Vector2 p2 = p1 + v;
+                return GetIntersects(new MinimalizedShapes.Line(p1, p2), cir1);
+            }
+        }
         #endregion
 
         public static Vector2 GetNearest(IShape shape, Vector2 point)
@@ -82,6 +120,8 @@ namespace GCS.Math
             => (float)((line.Point2.Y - line.Point1.Y) / (line.Point2.X - line.Point1.X));
         public static float Yint(ILineLike line)
             => (float)(line.Point1.Y - Grad(line) * line.Point1.X);
+        public static float Radius(ICircle circle)
+            => Distance(circle.Center, circle.Another);
         public static float Distance(this Vector2 p1, Vector2 p2)
             => (float)math.Sqrt(math.Pow(p2.X - p1.X, 2) + math.Pow(p2.Y - p1.Y, 2));
     }
