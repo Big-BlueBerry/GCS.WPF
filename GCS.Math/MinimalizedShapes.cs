@@ -4,7 +4,14 @@ namespace GCS.Math
 {
     public sealed class MinimalizedShapes
     {
-        public class Ellipse : IEllipse
+        public abstract class Shape : IShape
+        {
+            public static Vector2[] operator &(Shape shape1, Shape shape2)
+            {
+                return Geometry.GetIntersects((dynamic)shape1, (dynamic)shape2);
+            }
+        }
+        public class Ellipse : Shape, IEllipse
         {
             public Vector2 Focus1 { get; set; }
             public Vector2 Focus2 { get; set; }
@@ -17,7 +24,7 @@ namespace GCS.Math
             }
         }
 
-        public class Circle : ICircle
+        public class Circle : Shape, ICircle
         {
             public Vector2 Center { get; set; }
             public Vector2 Another { get; set; }
@@ -28,7 +35,7 @@ namespace GCS.Math
             }
         }
 
-        public abstract class LineLike : ILineLike
+        public abstract class LineLike : Shape, ILineLike
         {
             public Vector2 Point1 { get; set; }
             public Vector2 Point2 { get; set; }
@@ -51,7 +58,7 @@ namespace GCS.Math
             public Segment(Vector2 p1, Vector2 p2) : base(p1, p2) { }
         }
 
-        public class Dot : IDot
+        public class Dot : Shape, IDot
         {
             public Vector2 Coord { get; set; }
             public Dot(Vector2 coord)
