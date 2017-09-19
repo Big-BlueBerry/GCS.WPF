@@ -26,10 +26,71 @@ namespace GCS.Math
             return new[] { new Vector2(intersect_x, intersect_x * Grad(line1) + Yint(line1)) };
         }
 
+        public static Vector2[] GetIntersects(ILine line, ISegment seg)
+        {
+            try
+            {
+                ThrowIfInvalidShape(line);
+                ThrowIfInvalidShape(seg);
+            }
+            catch { throw; }
+
+            if (Grad(line) == Grad(seg))
+            {
+                if (Yint(line) == Yint(seg))
+                    throw new SameShapeException();
+                else
+                    return new Vector2[] { };
+            }
+
+            float intersect_x = (Yint(seg) - Yint(line)) / (Grad(line) - Grad(seg));
+            Vector2 intersect = new Vector2(intersect_x, intersect_x * Grad(line) + Yint(line));
+            var line_len = line.Point1.Distance(line.Point2);
+            var seg_len = seg.Point1.Distance(seg.Point2);
+            if (intersect.Distance(seg.Point1) < seg_len &&
+                intersect.Distance(seg.Point2) < seg_len)
+            {
+                return new Vector2[] { intersect };
+            }
+            else return new Vector2[] { };
+        }
+
         public static Vector2[] GetIntersects(ILine line, ICircle cir)
         {
-            throw new WorkWoorimException();
+            try
+            {
+                ThrowIfInvalidShape(line);
+                ThrowIfInvalidShape(cir);
+            }
+            catch { throw; }
+
+            Vector2 d = line.Point2 - line.Point1;
+            double dr = d.Length;
+            double D = (line.Point1.X - cir.Center.X) * (line.Point2.Y - cir.Center.Y)
+                    - (line.Point2.X - cir.Center.X) * (line.Point1.Y - cir.Center.Y);
+            double discriminant = Radius(cir) * Radius(cir) * dr * dr - D * D;
+            if (discriminant < 0)
+                return new Vector2[] { };
+            else if (discriminant == 0)
+                return new[] { new Vector2(D * d.Y / (dr * dr) + cir.Center.X, -D * d.X / (dr * dr) + cir.Center.Y) };
+            else
+            {
+                double x = D * d.Y / (dr * dr) + cir.Center.X;
+                double y = -D * d.X / (dr * dr) + cir.Center.Y;
+                float sgnDy = d.Y < 0 ? -1 : 1;
+                double xd = sgnDy * d.X * math.Sqrt(discriminant) / (dr * dr);
+                double yd = math.Abs(d.Y) * math.Sqrt(discriminant) / (dr * dr);
+
+                return new[]
+                {
+                    new Vector2(x + xd, y + yd),
+                    new Vector2(x - xd, y - yd)
+                };
+            }
         }
+
+        public static Vector2[] GetIntersects(ISegment seg, ILine line)
+            => GetIntersects(line, seg);
 
         public static Vector2[] GetIntersects(ISegment seg1, ISegment seg2)
         {
@@ -62,6 +123,44 @@ namespace GCS.Math
             else return new Vector2[] { };
         }
 
+        public static Vector2[] GetIntersects(ISegment seg, ICircle circle)
+        {
+            var lin = new MinimalizedShapes.Line(seg.Point1, seg.Point2);
+            Vector2[] intersects = GetIntersects(lin, circle);
+            float len = Distance(seg.Point1, seg.Point2);
+            if (intersects.Length == 0) return new Vector2[] { };
+            
+            var d01 = Distance(intersects[0], seg.Point1);
+            var d02 = Distance(intersects[0], seg.Point2);
+
+            if (intersects.Length == 1)
+            {
+                if (d01 < len && d02 < len)
+                    return intersects;
+                else return new Vector2[] { };
+            }
+            else
+            {
+                var d11 = Distance(intersects[1], seg.Point1);
+                var d12 = Distance(intersects[1], seg.Point2);
+                if (d01 < len && d02 < len)
+                {
+                    if (d11 < len && d12 < len)
+                        return intersects;
+                    else return new Vector2[] { intersects[0] };
+                }
+                else if (d11 < len && d12 < len)
+                    return new Vector2[] { intersects[1] };
+                else return new Vector2[] { };
+            }
+        }
+
+        public static Vector2[] GetIntersects(ICircle cir, ILine line)
+            => GetIntersects(line, cir);
+
+        public static Vector2[] GetIntersects(ICircle cir, ISegment seg)
+            => GetIntersects(seg, cir);
+
         public static Vector2[] GetIntersects(ICircle cir1, ICircle cir2)
         {
             try
@@ -86,7 +185,7 @@ namespace GCS.Math
                 float d = distance;
                 float r1 = Radius(cir1);
                 float r2 = Radius(cir2);
-                float x = (d * d - r1 * r1 - r2 * r2) / (d * 2);
+                float x = (d * d + r1 * r1 - r2 * r2) / (d * 2);
                 Vector2 p1 = cir1.Center + (cir2.Center - cir1.Center) * x / d;
                 Vector2 v = cir1.Center - cir2.Center;
                 v = new Vector2(-v.Y, v.X);
