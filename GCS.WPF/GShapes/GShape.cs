@@ -58,21 +58,29 @@ namespace GCS.WPF.GShapes
         public void Move(Vector2 delta)
         {
             for (int i = 0; i < _attrCount; i++)
-                this[i] += new Vector(delta.X, delta.Y);
+                this[i] += new Vector2(delta.X, delta.Y);
             _rule?.Move();
         }
         public void MoveTo(Vector2 to)
         {
-            Move(to - new Vector(this[0].X, this[0].Y));
+            Move(to - new Vector2(this[0].X, this[0].Y));
         }
 
         public static void SetRelationship(GShape parent, params GShape[] childs)
         {
-            foreach(var c in childs)
+            foreach (var c in childs)
             {
                 parent.Childs.Add(c);
                 c.Parents.Add(parent);
             }
+        }
+
+        /// <summary>
+        /// 도형의 교점을 구함
+        /// </summary>
+        public static Vector2[] operator &(GShape shape1, GShape shape2)
+        {
+            return Geometry.GetIntersects((dynamic)shape1, (dynamic)shape2);
         }
     }
 }
