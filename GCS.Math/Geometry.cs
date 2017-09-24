@@ -215,6 +215,11 @@ namespace GCS.Math
             if (shape.Center == shape.Another) throw new InvalidShapeException();
         }
 
+        public static void ThrowIfInvalidShape(IEllipse ellipse)
+        {
+
+        }
+
         public static float Grad(ILineLike line)
             => (float)((line.Point2.Y - line.Point1.Y) / (line.Point2.X - line.Point1.X));
         public static float Yint(ILineLike line)
