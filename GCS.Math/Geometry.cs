@@ -217,9 +217,8 @@ namespace GCS.Math
         {
             if (cir.Center == point)
             {
-                // 지금 이슈로 남겨뒀음
                 // https://github.com/Big-BlueBerry/GCS.WPF/issues/8
-                throw new WorkWoorimException();
+                return cir.Another;
             }
             var line = new MinimalizedShapes.Line(cir.Center, point);
             var res = GetIntersects(line, cir);
