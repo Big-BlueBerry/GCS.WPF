@@ -1,4 +1,5 @@
-﻿using math = System.Math;
+﻿using System;
+using math = System.Math;
 using Vector2 = System.Windows.Vector;
 
 namespace GCS.Math
@@ -195,14 +196,40 @@ namespace GCS.Math
         }
         #endregion
 
-        public static Vector2 GetNearest(IShape shape, Vector2 point)
+        public static Vector2 GetNearest(ILine line, Vector2 point)
         {
-            throw new WorkWoorimException();
+            var grad = (line.Point2.Y - line.Point1.Y) / (line.Point2.X - line.Point1.X);
+            var yint = line.Point1.Y - grad * line.Point1.X;
+            Vector2 vYint = new Vector2(0, yint);
+            Vector2 tempPoint = point - vYint;
+            var tempLine = new MinimalizedShapes.Line(line.Point1 - vYint, line.Point2 - vYint);
+            var orthogonal = new MinimalizedShapes.Line(tempPoint, new Vector2(tempPoint.X + tempLine.Grad * 10, tempPoint.Y - 10));
+            return GetIntersects(tempLine, orthogonal)[0] + vYint;
+        }
+
+        public static Vector2 GetNearest(ISegment seg, Vector2 point)
+        {
+            return GetNearest(new MinimalizedShapes.Line(seg.Point1, seg.Point2), point)
+                .Clamp(Min(seg.Point1, seg.Point2), Max(seg.Point1, seg.Point2));
+        }
+
+        public static Vector2 GetNearest(ICircle cir, Vector2 point)
+        {
+            if (cir.Center == point)
+            {
+                // https://github.com/Big-BlueBerry/GCS.WPF/issues/8
+                return cir.Another;
+            }
+            var line = new MinimalizedShapes.Line(cir.Center, point);
+            var res = GetIntersects(line, cir);
+            return Distance(res[0], point) < Distance(res[1], point) ? res[0] : res[1];
         }
 
         public static float GetNearestDistance(IShape shape, Vector2 point)
         {
-            throw new WorkWoorimException();
+            // 이렇게 하면 되긴 하지만 꽤 느리게 작동할거야..
+            // 시간 나면 디스패치 해서 속도를 향상시키는걸루
+            return Distance(GetNearest((dynamic)shape, point), point);
         }
         
         public static void ThrowIfInvalidShape(ILineLike shape)
@@ -215,6 +242,16 @@ namespace GCS.Math
             if (shape.Center == shape.Another) throw new InvalidShapeException();
         }
 
+        public static void ThrowIfInvalidShape(IEllipse ellipse)
+        {
+            // 두 초점이 일치하면 원
+            if (ellipse.Focus1 == ellipse.Focus2 || ellipse.Focus2 == ellipse.PinPoint || ellipse.PinPoint == ellipse.Focus1)
+                throw new InvalidShapeException();
+            // 두 초점을 잇는 선분 위에 핀포인트가 있다면 직선
+            if (Distance(ellipse.Focus1, ellipse.PinPoint) + Distance(ellipse.Focus2, ellipse.PinPoint) == Distance(ellipse.Focus1, ellipse.Focus2))
+                throw new InvalidShapeException();
+        }
+
         public static float Grad(ILineLike line)
             => (float)((line.Point2.Y - line.Point1.Y) / (line.Point2.X - line.Point1.X));
         public static float Yint(ILineLike line)
@@ -223,5 +260,21 @@ namespace GCS.Math
             => Distance(circle.Center, circle.Another);
         public static float Distance(this Vector2 p1, Vector2 p2)
             => (float)math.Sqrt(math.Pow(p2.X - p1.X, 2) + math.Pow(p2.Y - p1.Y, 2));
+        public static Vector2 Clamp(this Vector2 v, Vector2 min, Vector2 max)
+        {
+            return new Vector2(v.X.Clamp(min.X, max.X), v.Y.Clamp(min.Y, max.Y));
+        }
+        public static T Clamp<T>(this T val, T min, T max) where T : IComparable<T>
+        {
+            if (val.CompareTo(min) < 0) return min;
+            else if (val.CompareTo(max) > 0) return max;
+            else return val;
+        }
+        public static Vector2 Min(Vector2 v1, Vector2 v2)
+            => new Vector2(v1.X < v2.X ? v1.X : v2.X,
+                           v1.Y < v2.Y ? v1.Y : v2.Y);
+        public static Vector2 Max(Vector2 v1, Vector2 v2)
+            => new Vector2(v1.X > v2.X ? v1.X : v2.X,
+                           v1.Y > v2.Y ? v1.Y : v2.Y);
     }
 }

@@ -35,6 +35,16 @@ namespace GCS.WPF
             _shapes = new List<GShape>();
         }
 
+        private void AddShape(GShape shape)
+        {
+            _shapes.Add(shape);
+            if (!shapeCanvas.Children.Contains(shape.Control))
+                shapeCanvas.Children.Add(shape.Control);
+            foreach (var c in shape.Childs)
+                if (!_shapes.Contains(c))
+                    AddShape(c);
+        }
+
         private void Shape_Toggle(object sender, RoutedEventArgs e)
         {
             var btn = sender as ToggleButton;
@@ -108,7 +118,7 @@ namespace GCS.WPF
         private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
         {
             _currentState &= ~State.LEFTMOUSE_DOWN;
-            _shapes.Add(_drawingShape);
+            AddShape(_drawingShape);
             _drawingShape = null; // 요거 없으면 새로 생성안함
         }
     }

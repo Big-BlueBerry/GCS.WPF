@@ -97,8 +97,32 @@ namespace GCS.MathTests
         {
             try
             {
+                Line line1 = new Line(new Vector2(0, 0), new Vector2(0, 0));
+                Line line2 = new Line(new Vector2(0, 0), new Vector2(100, 100));
+                var res = line1 & line2;
+                Assert.Fail();
+            }
+            catch (InvalidShapeException) { }
+            try
+            {
+                Circle circle = new Circle(new Vector2(42, 42), new Vector2(42, 42));
+                Line line = new Line(new Vector2(0, 0), new Vector2(100, 100));
+                var res = circle & line;
+                Assert.Fail();
+            }
+            catch (InvalidShapeException) { }
+            try
+            {
                 Line line1 = new Line(new Vector2(0, 0), new Vector2(10, 10));
                 Line line2 = new Line(new Vector2(0, 0), new Vector2(100, 100));
+                var res = line1 & line2;
+                Assert.Fail();
+            }
+            catch (SameShapeException) { }
+            try
+            {
+                Line line1 = new Line(new Vector2(3, 7), new Vector2(7, 1));
+                Line line2 = new Line(new Vector2(4, 5.5), new Vector2(6, 2.5));
                 var res = line1 & line2;
                 Assert.Fail();
             }
